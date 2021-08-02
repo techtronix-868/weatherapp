@@ -6,6 +6,7 @@
        
     </head>
     <body>
+        city:<input type="text" id="name" disabled>
         condition:<input type="text" id="condition" disabled>
         temprature:<input type="text" id="temprature" disabled>
     </body>
@@ -18,6 +19,7 @@
                     $.get("/api/get/weather/"+cityname).then(
                       function(data){
                           console.log($("#condition"))
+                          $("#name").attr("value",data["name"]);
                           $("#condition").attr("value",data["condition"]);
                           $("#temprature").attr("value",data["temprature"])
 

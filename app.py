@@ -15,8 +15,9 @@ def insertCity():
             param = request.args.to_dict()
         else:
             param = request.form.to_dict()
-        # print (param)
-        return str(param)
+        y = param["city"]
+        x = "/get/weather/"+y
+        return redirect(x)
     else:
         return redirect('login')
 @app.route("/logout")
@@ -76,13 +77,17 @@ def userapi():
 @app.route("/api/get/weather/<cityname>")
 def apigetweather(cityname):
     params = {"q":cityname,"appid":"d95abc296b4b6a4e4c981a4b83bfa1de"}
-    print(params)
+    #print(params)
     response =  requests.get("https://api.openweathermap.org/data/2.5/weather",params=params)
     resp = response.json()
-    resp = {"condition":resp.get("weather")[0].get("description"),
+    #print(resp);
+    resp = {"name":resp.get("name"),"condition":resp.get("weather")[0].get("description"),
     "temprature":resp.get("main").get("temp")}
-    return Response(response=json.dumps(resp,indent=2),mimetype="application/json")
+    print(resp)
+    resp['temprature'] = round(resp['temprature'] - 272.14,2)
+    return Response(response=json.dumps(resp,indent=2),mimetype="application/json")  
 @app.route("/get/weather/<cityname>")
+
 def getweather(cityname):
     return render_template("getweather.html")
 
