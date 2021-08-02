@@ -4,6 +4,7 @@ import json
 import requests
 app= Flask(__name__)
 app.secret_key="my secret key"
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -36,7 +37,8 @@ def login():
         if cur.fetchone() is None:
             return("username password doesn't match")
         session['username']=data['username']
-        return "Logged In "+data['username']
+        return redirect("/")
+        
 
 @app.route("/register",methods=["GET","POST"])
 def register():
