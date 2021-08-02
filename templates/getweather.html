@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>
+            Weather
+        </title>
+       
+    </head>
+    <body>
+        condition:<input type="text" id="condition" disabled>
+        temprature:<input type="text" id="temprature" disabled>
+    </body>
+    <script  src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <script>
+            $(document).ready(function(){
+                    cityname = window.location.pathname.split("/")[3]
+                    console.log(window.location.pathname)
+                    $.get("/api/get/weather/"+cityname).then(
+                      function(data){
+                          console.log($("#condition"))
+                          $("#condition").attr("value",data["condition"]);
+                          $("#temprature").attr("value",data["temprature"])
+
+                      }  
+                    )
+                }
+             )
+            
+        </script>
+</html>
